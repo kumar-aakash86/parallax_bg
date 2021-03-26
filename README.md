@@ -60,4 +60,4 @@ _**ParallaxItem**_
 
 
 # LICENSE
-[MIT LICENSE](https://github.com/kumar-aakash86/parallax_bg/blob/main/LICENSE)
+[MIT LICENSE](https://github.com/kumar-aakash86/parallax_bg/blob/master/LICENSE)
