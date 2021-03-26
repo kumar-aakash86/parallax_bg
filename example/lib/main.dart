@@ -13,7 +13,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ParallaxType _parallaxType = ParallaxType.MOVEMENT;
   double _planetOffset = 1;
   double _meteorOffset = 5;
 
@@ -84,7 +83,6 @@ class _MyAppState extends State<MyApp> {
   _parallaxBody() {
     return ParallaxBackground(
       backgroundImage: "assets/images/galaxy.jpg",
-      parallaxType: _parallaxType,
       foregroundChilds: [
         ParallaxItem(
             child: Image.asset("assets/images/planet.png"),
