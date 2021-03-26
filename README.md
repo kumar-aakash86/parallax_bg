@@ -39,9 +39,13 @@ _**Change/Add/Remove ParallaxItem for foreground items**_
     child: Image.asset("assets/images/meteor.png"),
     offset: _meteorOffset),
 ```
+   
+      
 
 
-_**ParallaxBackground**_
+_**ParallaxBackground**_   
+   
+
 |     PROPERTY     |        TYPE        | REQUIRED |                                                                   DETAILS                                                                    |
 | :--------------: | :----------------: | :------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
 | backgroundImage  |       string       |   yes    |                                                         Image path from asset folder                                                         |
@@ -51,11 +55,12 @@ _**ParallaxBackground**_
 |     fallback     |      boolean       |    no    | If true render the items normally when there are no sensors available. If false, it will show a error message in visible area. Default false |
 
 
-_**ParallaxItem**_
-| PROPERTY |  TYPE   | REQUIRED |                                                      DETAILS                                                       |
-| :------: | :-----: | :------: | :----------------------------------------------------------------------------------------------------------------: |
-|  child   | Widget  |   yes    |                               Child widget to draw over background as parallax item                                |
-|  offset  | boolean |    no    | Offset values to calculate distance to move items when moving device. Need separate value for each item. Default 5 |
+_**ParallaxItem**_   
+   
+   | PROPERTY |  TYPE   | REQUIRED |                                                      DETAILS                                                       |
+   | :------: | :-----: | :------: | :----------------------------------------------------------------------------------------------------------------: |
+   |  child   | Widget  |   yes    |                               Child widget to draw over background as parallax item                                |
+   |  offset  | boolean |    no    | Offset values to calculate distance to move items when moving device. Need separate value for each item. Default 5 |
 
 
 
