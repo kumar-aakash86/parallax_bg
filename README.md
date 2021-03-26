@@ -1,12 +1,13 @@
 # parallax_bg
 Create beautiful & interactive parallax backgrounds.
 
+[![pub package](https://img.shields.io/badge/pub-v1.0.0-blue)](https://github.com/kumar-aakash86/parallax_bg)  
 
 
 ## Usage
 Add following command in your **pubspec.yaml** & install package
 
-`parallax_bg:0.0.1`
+`parallax_bg:1.0.0`
     
 
 
