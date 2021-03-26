@@ -49,8 +49,6 @@ class _ParallaxBackgroundState extends State<ParallaxBackground> {
     accelerometerAvailable =
         await SensorManager().isSensorAvailable(Sensors.ACCELEROMETER);
 
-    accelerometerAvailable = false;
-
     if (accelerometerAvailable) {
       final stream = await SensorManager().sensorUpdates(
         sensorId: Sensors.ACCELEROMETER,
@@ -87,6 +85,7 @@ class _ParallaxBackgroundState extends State<ParallaxBackground> {
     widgets.add(
       Positioned.fill(
         child: Container(
+          // constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(widget.backgroundImage), fit: BoxFit.none),
@@ -104,7 +103,11 @@ class _ParallaxBackgroundState extends State<ParallaxBackground> {
     widget.foregroundChilds.forEach((element) {
       widgets.add(AnimatedPositioned(
         duration: Duration(milliseconds: 100),
-        child: Center(child: element.child),
+        child: Container(
+          width: MediaQuery.of(context).size.width + (element.offset * 10),
+          height: MediaQuery.of(context).size.height + (element.offset * 10),
+          child: element.child,
+        ),
         bottom: _calculateOffset(Direction.BOTTOM, element.offset),
         top: _calculateOffset(Direction.TOP, element.offset),
         left: _calculateOffset(Direction.LEFT, element.offset),
@@ -120,35 +123,43 @@ class _ParallaxBackgroundState extends State<ParallaxBackground> {
     if (widget.reverse) {
       switch (_direction) {
         case Direction.LEFT:
-          _itemOffset = (_event.x > 0 ? _event.x : -_event.x.abs()) * offset;
+          _itemOffset = (_event.x > 0 ? _event.x : -_event.x.abs()) * offset -
+              (offset * 10);
           break;
         case Direction.RIGHT:
           _itemOffset =
-              (_event.x > 0 ? -_event.x.abs() : _event.x.abs()) * offset;
+              (_event.x > 0 ? -_event.x.abs() : _event.x.abs()) * offset -
+                  (offset * 10);
           break;
         case Direction.TOP:
           _itemOffset =
-              (_event.y > 0 ? -_event.y.abs() : _event.y.abs()) * offset;
+              (_event.y > 0 ? -_event.y.abs() : _event.y.abs()) * offset -
+                  (offset * 10);
           break;
         case Direction.BOTTOM:
-          _itemOffset = (_event.y > 0 ? _event.y : -_event.y.abs()) * offset;
+          _itemOffset = (_event.y > 0 ? _event.y : -_event.y.abs()) * offset -
+              (offset * 10);
           break;
       }
     } else {
       switch (_direction) {
         case Direction.RIGHT:
-          _itemOffset = (_event.x > 0 ? _event.x : -_event.x.abs()) * offset;
+          _itemOffset = (_event.x > 0 ? _event.x : -_event.x.abs()) * offset -
+              (offset * 10);
           break;
         case Direction.LEFT:
           _itemOffset =
-              (_event.x > 0 ? -_event.x.abs() : _event.x.abs()) * offset;
+              (_event.x > 0 ? -_event.x.abs() : _event.x.abs()) * offset -
+                  (offset * 10);
           break;
         case Direction.BOTTOM:
           _itemOffset =
-              (_event.y > 0 ? -_event.y.abs() : _event.y.abs()) * offset;
+              (_event.y > 0 ? -_event.y.abs() : _event.y.abs()) * offset -
+                  (offset * 10);
           break;
         case Direction.TOP:
-          _itemOffset = (_event.y > 0 ? _event.y : -_event.y.abs()) * offset;
+          _itemOffset = (_event.y > 0 ? _event.y : -_event.y.abs()) * offset -
+              (offset * 10);
           break;
       }
     }
