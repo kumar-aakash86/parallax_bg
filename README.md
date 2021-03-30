@@ -1,15 +1,17 @@
 # parallax_bg
-Create beautiful & interactive parallax backgrounds.
+Create beautiful & interactive parallax backgrounds for your apps and games.
 
-[![pub package](https://img.shields.io/badge/pub-v1.0.3-blue)](https://github.com/kumar-aakash86/parallax_bg)  
+[![pub package](https://img.shields.io/badge/pub-v1.0.4-blue)](https://github.com/kumar-aakash86/parallax_bg)  
 
+![Example Image](./screenshots/sample.gif)
+
+You can find another working example in [SlideIT Mobile Game](https://play.google.com/store/apps/details?id=ak.fltr.slide_puzzle)
 
 ## Usage
 Add following command in your **pubspec.yaml** & install package
 
-`parallax_bg:1.0.3`
+`parallax_bg:1.0.4`
     
-
 
 _**Import in your dart page**_
 ```
