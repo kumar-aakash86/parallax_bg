@@ -8,5 +8,5 @@ class ParallaxItem {
   final Widget child;
   final double offset;
 
-  ParallaxItem({@required this.child, this.offset = 5});
+  ParallaxItem({required this.child, this.offset = 5});
 }

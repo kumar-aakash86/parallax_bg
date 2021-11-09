@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:parallax_bg/src/parallax_item.dart';
-import 'package:flutter_sensors/flutter_sensors.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+// import 'package:flutter_sensors/flutter_sensors.dart';
 
 enum Direction { LEFT, RIGHT, TOP, BOTTOM }
 
@@ -17,14 +18,14 @@ class ParallaxBackground extends StatefulWidget {
   ///
   final String backgroundImage;
   final List<ParallaxItem> foregroundChilds;
-  final Widget child;
+  final Widget? child;
   final bool reverse;
   final bool fallback;
 
   const ParallaxBackground(
-      {Key key,
-      @required this.backgroundImage,
-      @required this.foregroundChilds,
+      {Key? key,
+      required this.backgroundImage,
+      required this.foregroundChilds,
       this.child,
       this.reverse = false,
       this.fallback = false})
@@ -34,10 +35,8 @@ class ParallaxBackground extends StatefulWidget {
 }
 
 class _ParallaxBackgroundState extends State<ParallaxBackground> {
-  var _event = AccelerometerData(0, 0, 0);
-  bool accelerometerAvailable = true;
-
-  StreamSubscription _accelSubscription;
+  final _streamSubscriptions = <StreamSubscription<dynamic>>[];
+  AccelerometerEvent? _acceleration;
 
   @override
   void initState() {
@@ -46,31 +45,22 @@ class _ParallaxBackgroundState extends State<ParallaxBackground> {
   }
 
   setupSensor() async {
-    accelerometerAvailable =
-        await SensorManager().isSensorAvailable(Sensors.ACCELEROMETER);
-
-    if (accelerometerAvailable) {
-      final stream = await SensorManager().sensorUpdates(
-        sensorId: Sensors.ACCELEROMETER,
-        interval: Sensors.SENSOR_DELAY_GAME,
-      );
-
-      _accelSubscription = stream.listen((sensorEvent) {
-        setState(() {
-          _event = AccelerometerData(
-              sensorEvent.data[0], sensorEvent.data[1], sensorEvent.data[2]);
-        });
-      });
-
-      setState(() {});
-    }
+    _streamSubscriptions.add(
+      accelerometerEvents.listen(
+        (AccelerometerEvent event) {
+          setState(() {
+            _acceleration = event;
+          });
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints.expand(),
-      child: accelerometerAvailable || widget.fallback
+      child: _acceleration != null || widget.fallback
           ? Stack(
               children: _generateBody(),
             )
@@ -95,7 +85,7 @@ class _ParallaxBackgroundState extends State<ParallaxBackground> {
     );
     widgets = _generateForeground(widgets);
 
-    if (widget.child != null) widgets.add(widget.child);
+    if (widget.child != null) widgets.add(widget.child!);
     return widgets;
   }
 
@@ -123,42 +113,62 @@ class _ParallaxBackgroundState extends State<ParallaxBackground> {
     if (widget.reverse) {
       switch (_direction) {
         case Direction.LEFT:
-          _itemOffset = (_event.x > 0 ? _event.x : -_event.x.abs()) * offset -
+          _itemOffset = (_acceleration!.x > 0
+                      ? _acceleration!.x
+                      : -_acceleration!.x.abs()) *
+                  offset -
               (offset * 10);
           break;
         case Direction.RIGHT:
-          _itemOffset =
-              (_event.x > 0 ? -_event.x.abs() : _event.x.abs()) * offset -
-                  (offset * 10);
+          _itemOffset = (_acceleration!.x > 0
+                      ? -_acceleration!.x.abs()
+                      : _acceleration!.x.abs()) *
+                  offset -
+              (offset * 10);
           break;
         case Direction.TOP:
-          _itemOffset =
-              (_event.y > 0 ? -_event.y.abs() : _event.y.abs()) * offset -
-                  (offset * 10);
+          _itemOffset = (_acceleration!.y > 0
+                      ? -_acceleration!.y.abs()
+                      : _acceleration!.y.abs()) *
+                  offset -
+              (offset * 10);
           break;
         case Direction.BOTTOM:
-          _itemOffset = (_event.y > 0 ? _event.y : -_event.y.abs()) * offset -
+          _itemOffset = (_acceleration!.y > 0
+                      ? _acceleration!.y
+                      : -_acceleration!.y.abs()) *
+                  offset -
               (offset * 10);
           break;
       }
     } else {
       switch (_direction) {
         case Direction.RIGHT:
-          _itemOffset = (_event.x > 0 ? _event.x : -_event.x.abs()) * offset -
+          _itemOffset = (_acceleration!.x > 0
+                      ? _acceleration!.x
+                      : -_acceleration!.x.abs()) *
+                  offset -
               (offset * 10);
           break;
         case Direction.LEFT:
-          _itemOffset =
-              (_event.x > 0 ? -_event.x.abs() : _event.x.abs()) * offset -
-                  (offset * 10);
+          _itemOffset = (_acceleration!.x > 0
+                      ? -_acceleration!.x.abs()
+                      : _acceleration!.x.abs()) *
+                  offset -
+              (offset * 10);
           break;
         case Direction.BOTTOM:
-          _itemOffset =
-              (_event.y > 0 ? -_event.y.abs() : _event.y.abs()) * offset -
-                  (offset * 10);
+          _itemOffset = (_acceleration!.y > 0
+                      ? -_acceleration!.y.abs()
+                      : _acceleration!.y.abs()) *
+                  offset -
+              (offset * 10);
           break;
         case Direction.TOP:
-          _itemOffset = (_event.y > 0 ? _event.y : -_event.y.abs()) * offset -
+          _itemOffset = (_acceleration!.y > 0
+                      ? _acceleration!.y
+                      : -_acceleration!.y.abs()) *
+                  offset -
               (offset * 10);
           break;
       }
@@ -170,7 +180,9 @@ class _ParallaxBackgroundState extends State<ParallaxBackground> {
   @override
   void dispose() {
     super.dispose();
-    _accelSubscription.cancel();
+    for (final subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
   }
 }
 

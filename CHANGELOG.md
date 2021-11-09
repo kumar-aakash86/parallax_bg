@@ -1,3 +1,5 @@
+## 2.0.0
+* Null safety support added
 ## 1.0.4
 * Sample gif added
 
