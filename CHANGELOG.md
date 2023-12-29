@@ -1,8 +1,15 @@
+## 2.0.1
+
+- Minor bug fix
+
 ## 2.0.0
-* Null safety support added
+
+- Null safety support added
+
 ## 1.0.4
-* Sample gif added
+
+- Sample gif added
 
 ## 1.0.0 - 1.0.3
 
-* Initial upload
+- Initial upload
