@@ -1,17 +1,16 @@
 name: parallax_bg
 description: Create beautiful & interactive parallax backgrounds
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/kumar-aakash86/parallax_bg
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
   flutter: ">=1.20.0"
 
 dependencies:
   flutter:
     sdk: flutter
   sensors_plus: ^1.2.1
-
 
 dev_dependencies:
   flutter_test:
